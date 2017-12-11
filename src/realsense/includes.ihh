@@ -1,0 +1,9 @@
+#include <iostream>
+#include <memory>
+#include <map>
+#include <librealsense/rs.hpp>
+
+#include "rs_sdk.h"
+#include "rs/cv_modules/max_depth_value_module/max_depth_value_module.h"
+
+#include <fstream>
