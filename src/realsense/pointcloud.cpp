@@ -20,11 +20,23 @@ std::map<std::string,
 			rs::float2 depth_pixel = {(float)dx, (float)dy};
 			rs::float3 depth_point = fp.depth_intrin.deproject(depth_pixel, depth_in_meters);
 
-            //pc["x"].push_back(depth_point.x);
-            //pc["y"].push_back(depth_point.y);
-            //pc["z"].push_back(depth_point.z);
-            std::cout << depth_point.x << " " << depth_point.y << " " << depth_point.z << std::endl;
+			if(depth_point.z > 3.5) continue;
+            pc["x"].push_back(depth_point.x);
+            pc["y"].push_back(depth_point.y);
+            pc["z"].push_back(depth_point.z);
 		}
 	}
     return pc;
 }
+
+mrpt::obs::CObservation3DRangeScan create_3Dobs::operator()(std::map<std::string,
+                                                                      std::vector<float>> points)
+{
+    mrpt::obs::CObservation3DRangeScan obs;
+    obs.points3D_x = points["x"]; 
+    obs.points3D_y = points["y"]; 
+    obs.points3D_z = points["z"]; 
+    obs.hasPoints3D = true;
+
+    return obs;
+} 

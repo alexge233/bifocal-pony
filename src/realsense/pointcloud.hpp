@@ -20,4 +20,18 @@ struct build_pointcloud
                                             const uint16_t * d_image);
 };
 
+
+/**
+ * @brief create mrpt::obs::CObservation3DRangeScan 
+ * @struct create_3Dobs
+ * @date 13.12.2017
+ * @version 0.1.0
+ */
+struct create_3Dobs
+{
+    ///@return CObservation3DRangeScan
+    mrpt::obs::CObservation3DRangeScan operator()(std::map<std::string,
+                                                           std::vector<float>> points);
+};
+
 #endif

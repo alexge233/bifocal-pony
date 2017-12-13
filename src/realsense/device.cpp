@@ -46,5 +46,5 @@ void irs_device::read_frames()
     rs_param__.depth_to_color = device__->get_extrinsics(rs::stream::depth, rs::stream::color);
     rs_param__.color_intrin = device__->get_stream_intrinsics(rs::stream::color);
     rs_param__.scale = device__->get_depth_scale();
-    auto pc = build_pointcloud()(rs_param__, depth_image);
+	auto obs3d = create_3Dobs()(build_pointcloud()(rs_param__, depth_image));
 }

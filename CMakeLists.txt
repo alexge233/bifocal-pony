@@ -7,10 +7,14 @@ if(!${LIBREALSENSE})
 endif()
 include_directories(/usr/local/include)
 
+find_package(MRPT REQUIRED COMPONENTS base slam maps)
+include_directories(${MRPT_INCLUDE_DIRS})
+
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1y")
 add_executable(${PROJECT_NAME} src/main.cpp
                                src/realsense/device.cpp
                                src/realsense/pointcloud.cpp
               )
 
-target_link_libraries(${PROJECT_NAME} ${LIBREALSENSE})
+target_link_libraries(${PROJECT_NAME} ${LIBREALSENSE}
+                                      ${MRPT_LIBS})
