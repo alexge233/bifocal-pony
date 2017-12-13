@@ -24,7 +24,8 @@ public:
     void stop();
 
     ///@brief read data from camera
-    void read_frames();
+    std::map<std::string,
+             std::vector<float>> read_frames();
 
 private:
     //@brief detect device

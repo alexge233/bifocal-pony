@@ -14,6 +14,8 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1y")
 add_executable(${PROJECT_NAME} src/main.cpp
                                src/realsense/device.cpp
                                src/realsense/pointcloud.cpp
+                               src/slam/icp.cpp
+                               src/slam/observation.cpp
               )
 
 target_link_libraries(${PROJECT_NAME} ${LIBREALSENSE}
