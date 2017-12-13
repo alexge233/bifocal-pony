@@ -6,7 +6,7 @@ int main()
     irs_device camera;
     camera.start();
 
-    for (auto i = 0; i < 120; i++) {
+    for (auto i = 0; i < 25; i++) {
         camera.read_frames();
     }
     camera.stop();

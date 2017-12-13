@@ -1,9 +1,15 @@
 #include <iostream>
 #include <memory>
 #include <map>
+#include <thread>
+
+#include <mrpt/obs/CObservation3DRangeScan.h>
+#include <mrpt/maps/COctoMap.h>
+#include <mrpt/opengl/CGridPlaneXY.h>
+#include <mrpt/opengl/COctoMapVoxels.h>
+#include <mrpt/system/os.h>
+#include <mrpt/gui/CDisplayWindow3D.h>
+#include <octomap/octomap.h>
+#include <octomap/OcTree.h>
+
 #include <librealsense/rs.hpp>
-
-#include "rs_sdk.h"
-#include "rs/cv_modules/max_depth_value_module/max_depth_value_module.h"
-
-#include <fstream>

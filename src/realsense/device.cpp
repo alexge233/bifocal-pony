@@ -11,7 +11,7 @@ void irs_device::check_device(std::shared_ptr<rs::context> cont,
                              unsigned int dev_number)
 {
     if (cont->get_device_count() == 0 ||
-        cont->get_device_count() < (dev_number + 1)) {
+        cont->get_device_count() < ((int)dev_number + 1)) {
         throw std::runtime_error("No intelrealsense device detected");
     }
 }
@@ -39,12 +39,20 @@ void irs_device::read_frames()
     device__->wait_for_frames();  
     //Read frames from camera
     const uint16_t * depth_image = (const uint16_t *)device__->get_frame_data(rs::stream::depth);
-    const uint8_t * color_image = (const uint8_t *)device__->get_frame_data(rs::stream::color);
+    //const uint8_t * color_image = (const uint8_t *)device__->get_frame_data(rs::stream::color);
 
     //Read camera parameters
     rs_param__.depth_intrin = device__->get_stream_intrinsics(rs::stream::depth);
     rs_param__.depth_to_color = device__->get_extrinsics(rs::stream::depth, rs::stream::color);
     rs_param__.color_intrin = device__->get_stream_intrinsics(rs::stream::color);
     rs_param__.scale = device__->get_depth_scale();
-    auto pc = build_pointcloud()(rs_param__, depth_image);
+
+    auto obs3d = create_3Dobs()(build_pointcloud()(rs_param__, depth_image));
+	
+    if (obs3d.getScanSize() > 10000) { 
+        std::cout << obs3d.getScanSize() << std::endl;
+        mrpt::maps::COctoMap map(0.01);
+        map.insertObservation(&obs3d);
+        see_octomap()(map);
+    }
 }
