@@ -4,6 +4,20 @@
 #include "includes.ihh"
 #include "parameters.hpp"
 
+#define DEGREES2RADIANS(x) ((x)*M_PI/180.)
+
+/**
+ * @brief rotate 90 degrees in X axis 
+ * @struct change_coordinates
+ * @date 14.12.2017
+ * @version 0.1.0
+ */
+struct change_coordinates
+{
+    Eigen::Vector3f operator()(rs::float3 point);    
+};
+
+
 /**
  * @brief calculate pointcloud
  * @struct build_pointcloud

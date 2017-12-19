@@ -5,7 +5,7 @@ icp::icp(std::string config_path)
 {
     builder__.ICP_options.loadFromConfigFile(config__, "MappingApplication");
     builder__.ICP_params.loadFromConfigFile(config__, "ICP");
-    builder__.setVerbosityLevel(mrpt::utils::VerbosityLevel::LVL_ERROR);
+    builder__.setVerbosityLevel(mrpt::utils::VerbosityLevel::LVL_INFO);
     builder__.initialize();
 }
 

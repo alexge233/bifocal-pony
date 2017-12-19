@@ -12,8 +12,8 @@
 struct create_3Dobs
 {
     ///@return CObservation3DRangeScan
-    mrpt::obs::CObservation3DRangeScan operator()(std::map<std::string,
-                                                           std::vector<float>> points);
+    std::shared_ptr<mrpt::obs::CObservation3DRangeScan> operator()(std::map<std::string,
+                                                                   std::vector<float>> points);
 };
 
 #endif
