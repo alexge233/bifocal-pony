@@ -23,9 +23,12 @@ public:
     ///@brief stop device
     void stop();
 
-    ///@brief read data from camera
+    ///@brief obtain pointcloud from color and depth
     std::map<std::string,
-             std::vector<float>> read_frames();
+             std::vector<float>> obtain_pointcloud();
+
+    ///@brief obtain images from camera
+    frame read_frame();
 
 private:
     //@brief detect device
@@ -35,6 +38,9 @@ private:
     rs::device *device__;
     std::shared_ptr<rs::context> context__;
     frame_param rs_param__;
+    camera_param color__;
+    camera_param depth__;
+
 };
 
 #endif

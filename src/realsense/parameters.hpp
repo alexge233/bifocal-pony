@@ -32,4 +32,35 @@ struct frame_param
     float scale;
 };
 
+/**
+ * @brief color and depth images
+ * @struct frame
+ * @date 19.12.2017
+ * @version 0.1.0
+ */
+struct frame
+{
+    cv::Mat color_img;
+    cv::Mat depth_img;
+
+    template <class data_type>
+    cv::Mat raw_to_mat(data_type image,
+                       camera_param param,
+                       int type_mat);
+};
+
+/*
+ * Implementation
+ */
+template <class data_type>
+cv::Mat frame::raw_to_mat(data_type image,
+                          camera_param param,
+                          int type_mat)
+{
+    return cv::Mat(cv::Size(param.width, param.height), 
+                   type_mat,
+                   (void*)image,
+                   cv::Mat::AUTO_STEP);
+}
+
 #endif

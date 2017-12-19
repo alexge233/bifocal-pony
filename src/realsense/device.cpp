@@ -21,10 +21,11 @@ void irs_device::start()
     if (!device__) {
         throw std::runtime_error("Impossible to start device");
     }
-    camera_param color = {640, 480, 60, 3, rs::format::rgb8};
-    camera_param depth = {628, 468, 60, 2, rs::format::z16};
-    device__->enable_stream(rs::stream::color, color.width, color.height, color.format, color.fps);
-    device__->enable_stream(rs::stream::depth, depth.width, depth.height, depth.format, depth.fps);
+    camera_param color__ = {640, 480, 30, 3, rs::format::rgb8};
+    //camera_param depth = {628, 468, 60, 2, rs::format::z16};
+    camera_param depth__ = {640, 480, 30, 2, rs::format::z16};
+    device__->enable_stream(rs::stream::color, color__.width, color__.height, color__.format, color__.fps);
+    device__->enable_stream(rs::stream::depth, depth__.width, depth__.height, depth__.format, depth__.fps);
     device__->start();    
 }
 
@@ -34,8 +35,22 @@ void irs_device::stop()
     context__.reset();
 }
 
+frame irs_device::read_frame()
+{
+    device__->wait_for_frames();  
+    //Read frames from camera
+    const uint16_t * depth_image = (const uint16_t *)device__->get_frame_data(rs::stream::depth);
+    const uint8_t * color_image = (const uint8_t *)device__->get_frame_data(rs::stream::color);
+
+    frame images;
+    images.color_img = images.raw_to_mat(color_image, color__, CV_8UC3);
+    images.depth_img = images.raw_to_mat(depth_image, depth__, CV_8UC1);
+
+    return images;
+}
+
 std::map<std::string,
-         std::vector<float>> irs_device::read_frames()
+         std::vector<float>> irs_device::obtain_pointcloud()
 {
     device__->wait_for_frames();  
     //Read frames from camera

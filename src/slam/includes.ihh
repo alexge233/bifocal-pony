@@ -1,8 +1,0 @@
-#include <iostream>
-#include <memory>
-#include <map>
-#include <mrpt/obs/CObservation3DRangeScan.h>
-#include <mrpt/poses/CPose3D.h>
-#include <mrpt/slam/CMetricMapBuilderICP.h>
-#include <mrpt/slam/CICP.h>
-#include <mrpt/utils/CConfigFile.h>
