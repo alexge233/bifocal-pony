@@ -43,17 +43,21 @@ struct frame
     cv::Mat color_img;
     cv::Mat depth_img;
 
+    /// @brief convert raw data into a cv::Mat
     template <class data_type>
-    cv::Mat raw_to_mat(data_type image,
+    cv::Mat raw_to_mat(data_type * image,
                        camera_param param,
                        int type_mat);
+
+    /// @brief check the size of the cv::Mat
+    bool check_size();
 };
 
 /*
  * Implementation
  */
 template <class data_type>
-cv::Mat frame::raw_to_mat(data_type image,
+cv::Mat frame::raw_to_mat(data_type * image,
                           camera_param param,
                           int type_mat)
 {

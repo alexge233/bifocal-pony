@@ -8,7 +8,9 @@ int main(int argc, char **argv)
     camera.start();
     slam orb_slam(argv[1], argv[2]);
 
-    for (auto i = 0; i < 120; i++) {
+    //for (auto i = 0; i < 25; i++) {
+    while(true) {
+        camera.read_frame();
         orb_slam.do_slam(camera.read_frame());
     }
     camera.stop();

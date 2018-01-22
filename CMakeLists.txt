@@ -5,7 +5,7 @@ find_library(LIBREALSENSE realsense)
 if(!${LIBREALSENSE})
     message(FATAL "failed to find librealsense")
 endif()
-find_package(OpenCV REQUIRED)
+find_package(OpenCV 3.2 REQUIRED)
 
 #ORB SLAM 2
 find_package(Eigen3 REQUIRED)
@@ -25,6 +25,7 @@ include_directories(/usr/local/include
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1y")
 add_executable(${PROJECT_NAME} src/main.cpp
                                src/realsense/device.cpp
+                               src/realsense/parameters.cpp
                                src/realsense/pointcloud.cpp
                                src/orb_slam/slam.cpp
               )

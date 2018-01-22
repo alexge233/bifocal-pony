@@ -10,6 +10,9 @@ irs_device::irs_device(const unsigned int number_dev)
 void irs_device::check_device(std::shared_ptr<rs::context> cont,
                              unsigned int dev_number)
 {
+    if (!context__) {
+        throw std::runtime_error("No object context create for the rs device");
+    }
     if (cont->get_device_count() == 0 ||
         cont->get_device_count() < (dev_number + 1)) {
         throw std::runtime_error("No intelrealsense device detected");
@@ -21,9 +24,10 @@ void irs_device::start()
     if (!device__) {
         throw std::runtime_error("Impossible to start device");
     }
-    camera_param color__ = {640, 480, 30, 3, rs::format::rgb8};
-    //camera_param depth = {628, 468, 60, 2, rs::format::z16};
-    camera_param depth__ = {640, 480, 30, 2, rs::format::z16};
+    color__ = {640, 480, 30, 3, rs::format::rgb8};
+    //depth__ = {628, 468, 30, 2, rs::format::z16};
+    depth__ = {640, 480, 30, 2, rs::format::z16};
+
     device__->enable_stream(rs::stream::color, color__.width, color__.height, color__.format, color__.fps);
     device__->enable_stream(rs::stream::depth, depth__.width, depth__.height, depth__.format, depth__.fps);
     device__->start();    
@@ -44,7 +48,7 @@ frame irs_device::read_frame()
 
     frame images;
     images.color_img = images.raw_to_mat(color_image, color__, CV_8UC3);
-    images.depth_img = images.raw_to_mat(depth_image, depth__, CV_8UC1);
+    images.depth_img = images.raw_to_mat(depth_image, depth__, CV_16UC1);
 
     return images;
 }
