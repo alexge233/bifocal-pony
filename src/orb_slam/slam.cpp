@@ -14,9 +14,11 @@ void slam::do_slam(frame images)
         auto now = std::chrono::steady_clock::now();
         auto timestamp = std::chrono::duration_cast<std::chrono::milliseconds>
                                                 (now - start__).count(); 
-        slam_system__.TrackRGBD(images.color_img,
-                                images.depth_img,
-                                timestamp); 
+        auto pose = slam_system__.TrackRGBD(images.color_img,
+                                            images.depth_img,
+                                            timestamp); 
+        std::cout << pose << std::endl;
+
     }
     else {
         std::cout << "Error size image" << std::endl;

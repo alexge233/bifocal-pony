@@ -6,6 +6,9 @@ int main(int argc, char **argv)
 {
     irs_device camera;
     camera.start();
+    if (argc != 3) {
+        throw std::runtime_error("Missing parameters to do ORB SLAM");
+    }
     slam orb_slam(argv[1], argv[2]);
 
     //for (auto i = 0; i < 25; i++) {
